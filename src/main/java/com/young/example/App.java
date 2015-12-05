@@ -6,8 +6,10 @@ import org.slf4j.LoggerFactory;
 import com.linecorp.armeria.common.SessionProtocol;
 import com.linecorp.armeria.server.Server;
 import com.linecorp.armeria.server.ServerBuilder;
+import com.linecorp.armeria.server.Service;
 import com.linecorp.armeria.server.VirtualHost;
 import com.linecorp.armeria.server.VirtualHostBuilder;
+import com.linecorp.armeria.server.composition.SimpleCompositeServiceBuilder;
 import com.linecorp.armeria.server.http.file.HttpFileService;
 import com.linecorp.armeria.server.http.tomcat.TomcatService;
 import com.linecorp.armeria.server.logging.LoggingService;
@@ -32,12 +34,15 @@ public final class App {
                 return;
             }
 
-            final VirtualHost vh = new VirtualHostBuilder()
-                    .serviceUnder("/api", TomcatService.forClassPath(App.class)
-                                                       .decorate(LoggingService::new))
+            final Service service = new SimpleCompositeServiceBuilder()
+                    .serviceUnder("/api", TomcatService.forClassPath(App.class))
                     .serviceUnder("/", HttpFileService.forClassPath("/assets"))
                     .build();
+
+            final VirtualHost vh = new VirtualHostBuilder()
+                    .serviceUnder("/", service.decorate(LoggingService::new)).build();
             sb.defaultVirtualHost(vh);
+
             server = sb.build();
 
             try {
