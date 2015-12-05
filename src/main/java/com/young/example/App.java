@@ -1,5 +1,8 @@
 package com.young.example;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.linecorp.armeria.common.SessionProtocol;
 import com.linecorp.armeria.server.Server;
 import com.linecorp.armeria.server.ServerBuilder;
@@ -11,7 +14,8 @@ import com.linecorp.armeria.server.logging.LoggingService;
 
 import io.netty.util.internal.PlatformDependent;
 
-public class App {
+public final class App {
+    private static final Logger logger = LoggerFactory.getLogger(App.class);
 
     private static final Object lock = new Object();
 
@@ -45,6 +49,7 @@ public class App {
             httpPort = server.activePorts().values().stream()
                              .filter(p -> p.protocol() == SessionProtocol.HTTP)
                              .findAny().get().localAddress().getPort();
+            logger.info("Listening on port {}...", httpPort);
         }
     }
 
@@ -60,6 +65,14 @@ public class App {
     }
 
     public static void main(String[] args) throws Exception {
-        startServer(new ServerBuilder().port(8091, SessionProtocol.HTTP));
+        String port = System.getenv("PORT");
+        if (port == null) {
+            port = System.getProperty("PORT");
+        }
+
+        startServer(new ServerBuilder().port(port != null ? Integer.parseInt(port) : 8091,
+                                             SessionProtocol.HTTP));
     }
+
+    private App() {}
 }

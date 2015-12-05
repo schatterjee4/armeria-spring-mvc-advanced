@@ -7,9 +7,8 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
 import org.junit.AfterClass;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.linecorp.armeria.common.SessionProtocol;
@@ -17,8 +16,8 @@ import com.linecorp.armeria.server.ServerBuilder;
 
 public class AppTest {
 
-    @Before
-    public void setUp() throws Exception {
+    @BeforeClass
+    public static void setUpClass() throws Exception {
         App.startServer(new ServerBuilder().port(0, SessionProtocol.HTTP));
     }
 
@@ -30,7 +29,7 @@ public class AppTest {
     @Test
     public void testOk() throws Exception {
         try (CloseableHttpClient hc = HttpClients.createMinimal()) {
-            final HttpGet req = new HttpGet("http://localhost:" + App.httpPort() + "/");
+            final HttpGet req = new HttpGet("http://localhost:" + App.httpPort() + '/');
 
             try (CloseableHttpResponse res = hc.execute(req)) {
                 assertThat(res.getStatusLine().toString(), is("HTTP/1.1 200 OK"));

@@ -20,7 +20,7 @@ public class HelloController {
         logger.debug("contextPath: {}", request.getContextPath());
         logger.debug("requestURI: {}", request.getRequestURI());
 
-        Map<String, Object> map = new HashMap<>(1);
+        final Map<String, Object> map = new HashMap<>(1);
         map.put("name", "delegacy");
         return map;
     }

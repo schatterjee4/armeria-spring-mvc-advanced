@@ -18,7 +18,7 @@ import org.springframework.web.context.WebApplicationContext;
 import com.young.example.config.MvcConfig;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { MvcConfig.class })
+@ContextConfiguration(classes = MvcConfig.class)
 @WebAppConfiguration
 public class HelloControllerTest {
 
@@ -29,7 +29,7 @@ public class HelloControllerTest {
 
     @Before
     public void setUp() {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
+        mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
     }
 
     @Test
