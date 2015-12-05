@@ -1,0 +1,21 @@
+language: java
+
+jdk:
+- oraclejdk8
+
+os:
+- linux
+
+branches:
+  only:
+  - master
+
+cache:
+  directories:
+  - "$HOME/.m2"
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: oqRmiYeAh4I4+v3IZroyXk5HG2WFFs5jJKkKT4T79KRPimR/u6CVeYnUwnINQ8csePkGPtLgjBwCLtB7NC9eeUHy5oDM9IdyOaLdmacnscciE9o6Sa8YVD+TaQAI0U+J+Urg+ZqH+Lk5Ubd2awLlIrk5XoefLkbHo0PQBzWfgmPUIdi7jzlVNzv333aHGkbVXzoqKQV4J0148sp2LowDE08jMMoJ9u5z9PzmAWNO6i0XNWxW9fPVuAo2zB+OrVcMa3a97Uaxy6t9P4c0yS0dTLzBPwsU+WcXQixmITmRSvtq4iscBMrQJb6po68v2IX8e/xh3iw+Crt4ZuEm4dc8mklQRNYh/D6O2IGKwIoDAOYoKnKGms4Ed+S8HwL4GcR3pGihSd1BuHnBGQBPSpG6ipfpMegV8OXfBrJJ49WBrSL774ExVBnaf0r/oMS8XTbc6u3/STa/+/LbllNkg6J4VAt2jcK13mnpYD09wGyjKmv0Oop+2i4Xbfr2VEpSkq63ZQhRsQ5fUuyMYAaGT0ImYwWAJ1V1EECCVO03lJz4ysaNtyfkSu6RuijBNAGk8HJBuGm9JTbfR6D27kXlxVz6fzT8wUkAhOsEqqNAoUOuG4ENM6Bfq3/23eRQsvSEMCUFv+98v1xOkq5I91BRcNneSHttaFvzOKGxhf2cWqzH4UM=
+  app: shrouded-wave-1473
